@@ -9,15 +9,7 @@ io.on("connection", (socket) => {
         console.log("X desconectou: " + socket.id)
     })
 
-   socket.on("Olá,Mundo!", (data) => {
-       console.log("Estou Funcionando!")
-       console.log(data)
-   })
-
-   socket.on("palavra", (data) => {
-       console.log(data)
-       socket.emit("resultado", data + " - Carlos Bandelli!")
-   })
+  
 
 })
 
