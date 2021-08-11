@@ -5,9 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 </head>
+<style>
+    #chat{
+        max-height: 500px;
+        min-height: 500px;
+        background-color: aliceblue;
+        overflow-y: scroll;
+    }
+</style>
 <body>
-    
+    <h1>Chat do Carlos</h1>
+    <div id="chat">
+
+    </div><br>    
+    <input type="text" name="" id="msg" class="form-control" placeholder="msg...">
+    <input type="text" name="" id="username" placeholder="Seu nome de usuário" class="form-control"><br>
+    <div class="d-grid gap-2">
+        <button class="btn btn-primary" type="button"  onclick="enviar()">Enviar</button>        
+    </div>    
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
 <script>
@@ -15,6 +33,25 @@
     socket.on("disconnect",() => {
         console.log("Desconectado")
     })
+
+    socket.on("showmsg", (data) => {
+        console.log(data)
+        var chat = document.getElementById("chat")
+        var p = document.createElement("p")
+        p.innerHTML = data.username + ": " + data.msg
+        chat.append(p)
+    })
+
+    function enviar(){
+        var msgField = document.getElementById("msg")
+        var userNameField = document.getElementById("username")
+
+        var msg = msgField.value
+        var username = userNameField.value
+
+        socket.emit("msg", {msg: msg, username: username})
+
+    }
     
 </script>
 </html>

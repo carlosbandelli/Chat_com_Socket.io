@@ -9,7 +9,10 @@ io.on("connection", (socket) => {
         console.log("X desconectou: " + socket.id)
     })
 
-  
+    socket.on("msg", (data)=>{
+        io.emit("showmsg",data)
+        console.log(data)
+    })
 
 })
 
